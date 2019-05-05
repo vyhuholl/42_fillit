@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 		{
 			solution = ft_solve(input);
 			ft_print(solution);
+			ft_free_list(input);
 		}
 	}
 	else
