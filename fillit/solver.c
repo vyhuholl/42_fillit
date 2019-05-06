@@ -38,10 +38,34 @@ t_map	*ft_create_map(size_t size)
 	return (map);
 }
 
+/* a function which places a piece at the map (with piece's upper-left corner located at (x, y)) */
+/* if it is possible and returns 0 otherwise */
+
+int		ft_can_place(t_map *map, t_piece *piece, int x, int y)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (j < piece->x_len)
+	{
+		i = 0;
+		while (i < piece->y_len)
+		{
+			if (piece->arr[i][j] == '#' && map->arr[y + i][x + j] != '.')
+				return (0);
+			i++;
+		}
+		j++;
+	}
+	ft_place(map, piece, x, y, piece->letter);
+	return (1);
+}
+
 /* a function which places a piece marked with letter L at the map */
 /* (with piece's upper-left corner located at (x, y)) */
 
-void	ft_place(t_map *map, t_piece *piece, int x, int y, char L)
+void	ft_place(t_map *map, t_piece *piece, int x, int y)
 {
 	int	i;
 	int	j;
@@ -53,7 +77,7 @@ void	ft_place(t_map *map, t_piece *piece, int x, int y, char L)
 		while (i < piece->y_len)
 		{
 			if (piece->arr[i][j] == '#')
-				map->arr[y + i][x + j] = L;
+				map->arr[y + i][x + j] = piece->letter;
 			i++;
 		}
 		j++;

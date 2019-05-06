@@ -12,9 +12,29 @@
 
 #include "fillit.h"
 
-/* a function which checks whether a piece is connected */
+/*
+** A function which checks whether a block of a tetrimino
+** at (x, y) position touches at least one other block.
+*/
 
-int		ft_is_connected(t_piece *piece, char L)
+int		ft_touches(t_piece *piece, char letter, int x, int y)
+{
+	if (x > 0 && piece->arr[x - 1][y] == letter)
+		return (1);
+	if (y > 0 && piece->arr[x][y - 1] == letter)
+		return (1);
+	if (x < piece->x_len - 1 && piece->arr[x + 1][y] == letter)
+		return (1);
+	if (y < piece->y_len - 1 && piece->arr[x][y + 1] == L)
+		return (1);
+	return (0);
+}
+
+/*
+** A function which checks whether a piece is connected.
+*/
+
+int		ft_is_connected(t_piece *piece, char letter)
 {
 	int i;
 	int	j;
@@ -25,12 +45,12 @@ int		ft_is_connected(t_piece *piece, char L)
 		i = 0;
 		while (i < piece->y_len)
 		{
-			if (piece[i][j] == L)
-				if (!ft_touches(piece, L, j, i))
+			if (piece[i][j] == letter)
+				if (!ft_touches(piece, letter, j, i))
 				{
 					ft_free_piece(piece);
 					return (NULL);
-				}		
+				}
 			i++;
 		}
 		j++;
@@ -38,25 +58,39 @@ int		ft_is_connected(t_piece *piece, char L)
 	return (1);
 }
 
-/* a function which constructs a tetrimino marked with letter L from input */
+/*
+** A function which constructs a tetrimino
+** marked with a given letter from input.
+*/
 
-t_piece	*ft_construct_piece(char *input, char L, int x_len, int y_len)
+t_piece	*ft_construct_piece(char *input, char letter)
 {
 	t_piece	*piece;
-	char	arr[y_len][x_len];
+	int		x_start;
+	int		x_end;
+	int		y_start;
+	int		y_end;
 
+	x_start = ft_get_x_start(input);
+	x_end = ft_get_x_end(input);
+	y_start = ft_get_y_start(input);
+	y_end = ft_get_y_end(input);
 	piece = ft_memalloc(sizeof(t_piece));
-	piece->x_len = x_len;
-	piece->y_len = y_len;
 	piece->L = L;
-	if (!ft_is_connected(piece, L))
+	piece->x_len = x_end - x_start;
+	piece->y_len = y_end - y_start;
+	piece->arr = ft_get_arr(input, piece->x_len, piece->y_len);
+	if (!ft_is_connected(piece, letter))
 		return (NULL);
 	return (piece);
 }
 
-/* a function which returns a tetrimino marked with letter L if input is valid, NULL otherwise */
+/*
+** A function which returns a tetrimino marked with
+** a given letter if input is valid, NULL otherwise.
+*/
 
-t_piece	*ft_is_ok(char *input, char L)
+t_piece	*ft_is_ok(char *input, char letter)
 {
 	int	i;
 	int	count;
@@ -76,37 +110,13 @@ t_piece	*ft_is_ok(char *input, char L)
 	}
 	if (count != 4)
 		return (NULL);
-	x_len = ft_get_x_len(input);
-	y_len = ft_get_y_len(input);
-	return (ft_construct_piece(input, L, x_len, y_len));
+	return (ft_construct_piece(input, letter));
 }
 
-/* a function which places a piece at the map (with piece's upper-left corner located at (x, y)) */
-/* if it is possible and returns 0 otherwise */
-
-int		ft_can_place(t_map *map, t_piece *piece, int x, int y)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	while (j < piece->x_len)
-	{
-		i = 0;
-		while (i < piece->y_len)
-		{
-			if (piece->arr[i][j] == '#' && map->arr[y + i][x + j] != '.')
-				return (0);
-			i++;
-		}
-		j++;
-	}
-	ft_place(map, piece, x, y, piece->L);
-	return (1);
-}
-
-/* a function which checks using recursive backtracking whether it is possible */
-/* to fit a list of tetriminos into a map of a given size */
+/*
+** A function which checks using recursive backtracking whether
+** it is possible to fit a list of tetriminos into a map of a given size.
+*/
 
 int		ft_is_map_ok(t_map *map, t_list *input)
 {
@@ -128,7 +138,7 @@ int		ft_is_map_ok(t_map *map, t_list *input)
 				if (ft_is_map_ok(map, input->next))
 					return (1);
 				else
-					ft_place(map, piece, x, y, '.');;
+					ft_place_empty(map, piece, x, y);
 			}
 			i++;
 		}

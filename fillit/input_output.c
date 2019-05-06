@@ -12,7 +12,9 @@
 
 #include "fillit.h"
 
-/* a function which reads a list of tetriminos from the file descriptor */
+/*
+** A function which reads a list of tetriminos from the file descriptor.
+*/
 
 t_list	*ft_read(int fd)
 {
@@ -38,12 +40,14 @@ t_list	*ft_read(int fd)
 	}
 	ft_memdel((void**)&buf);
 	if (len != 0)
-		return(free_list(list));
+		return (free_list(list));
 	ft_lstrev(&list);
 	return (list);
 }
 
-/* a function which frees a tetrimino */
+/*
+** A function which frees a tetrimino.
+*/
 
 void	ft_free_piece(t_piece *piece)
 {
@@ -52,14 +56,17 @@ void	ft_free_piece(t_piece *piece)
 	i = 0;
 	while (i < piece->y_len)
 	{
-		ft_memdel((void**)&(piece->place[i]));
+		ft_memdel((void**)&(piece->arr[i]));
 		i++;
 	}
-	ft_memdel((void**)&(piece->place));
+	ft_memdel((void**)&(piece->arr));
 	ft_memdel((void**)&piece);
 }
 
-/* a function which frees a list -- in case our input is invalid, or we solved a map */
+/*
+** A function which frees a list --
+** in case our input is invalid, or if we solved a map.
+*/
 
 void	ft_free_list(t_list *list)
 {
@@ -76,7 +83,9 @@ void	ft_free_list(t_list *list)
 	}
 }
 
-/* a function which frees a map */
+/*
+** A function which frees a map.
+*/
 
 void	ft_free_map(t_map *map)
 {
@@ -89,7 +98,9 @@ void	ft_free_map(t_map *map)
 	ft_memdel((void**)&map);
 }
 
-/* a function which prints a map, immediately freeing it after */
+/*
+** A function which prints a map, immediately freeing it after.
+*/
 
 void	ft_print(t_map *map)
 {
