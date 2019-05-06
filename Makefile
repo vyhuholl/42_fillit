@@ -13,8 +13,8 @@
 NAME = fillit
 HEADER = ./fillit/fillit.h
 FLAG = -Wall -Wextra -Werror
-SRC = ./fillit/main.c ./fillit/input_output.c ./fillit/checker.c ./fillit/solver.c ./fillit/auxillary.c
-OBJ = ./fillit/main.o ./fillit/input_output.c ./fillit/checker.o ./fillit/solver.o ./fillit/auxillary.o
+SRC = ./fillit/main.c ./fillit/input_output.c ./fillit/checker.c ./fillit/solver.c ./fillit/getters.c ./fillit/place_empty.c
+OBJ = ./fillit/main.o ./fillit/input_output.c ./fillit/checker.o ./fillit/solver.o ./fillit/getters.o ./fillit/place_empty.o
 
 OPTION = -c -I $(HEADER)
 
