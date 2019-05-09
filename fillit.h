@@ -51,7 +51,7 @@ int				ft_get_y_end(char *input);
 char			**ft_get_arr(char *input, int x_len, int y_len, char letter);
 int				ft_conn(char *input);
 t_piece			*ft_construct_piece(char *input, char letter);
-t_piece			*ft_is_ok(char *input, char letter);
+t_piece			*ft_is_ok(char *input, char letter, int cnt);
 int				ft_is_map_ok(t_map *map, t_list *input);
 t_map			*ft_create_map(int size);
 int				ft_can_place(t_map *map, t_piece *piece, int i, int j);

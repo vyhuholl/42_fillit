@@ -34,7 +34,9 @@ int		ft_conn(char *input)
 		}
 		i++;
 	}
-	return (n == 6 || n == 8);
+	if (n == 6 || n == 8)
+		return (1);
+	return (0);
 }
 
 /*
@@ -67,7 +69,7 @@ t_piece	*ft_construct_piece(char *input, char letter)
 ** marked with a given letter from input.
 */
 
-t_piece	*ft_is_ok(char *input, char letter)
+t_piece	*ft_is_ok(char *input, char letter, int cnt)
 {
 	int	i;
 	int	count;
@@ -76,14 +78,20 @@ t_piece	*ft_is_ok(char *input, char letter)
 	count = 0;
 	while (i < 20)
 	{
-		if (input[i] != '#' && input[i] != '.')
-			if (!(input[i] == '\n' && (i % 5 == 4)))
+		if (i % 5 < 4)
+		{
+			if (input[i] != '#' && input[i] != '.')
 				return (NULL);
-		if (input[i] == '#')
-			count++;
+			if (input[i] == '#')
+				count++;
+		}
+		else if (input[i] != '\n')
+			return (NULL);
 		i++;
 	}
-	if (count != 4 || ft_conn(input))
+	if (cnt == 21 && input[20] != '\n')
+		return (NULL);
+	if (count != 4 || ft_conn(input) == 0)
 		return (NULL);
 	return (ft_construct_piece(input, letter));
 }
