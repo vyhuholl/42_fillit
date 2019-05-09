@@ -12,21 +12,6 @@
 
 #include "libft.h"
 
-static void	*ft_content_dup(void const *content, size_t content_size)
-{
-	char	*ptr_1;
-	char	*ptr_2;
-	void	*new;
-
-	if (!(new = ft_memalloc(content_size)))
-		return (NULL);
-	ptr_1 = (char*)content;
-	ptr_2 = (char*)new;
-	while (*ptr_1)
-		*(ptr_2++) = *(ptr_1++);
-	return (new);
-}
-
 t_list		*ft_lstnew(void const *content, size_t content_size)
 {
 	t_list	*list;
@@ -40,10 +25,15 @@ t_list		*ft_lstnew(void const *content, size_t content_size)
 	}
 	else
 	{
-		if (!(list->content = ft_content_dup(content, content_size)))
+		list->content = ft_memalloc(content_size);
+		if (!list->content)
+		{
+			ft_memdel((void**)&list);
 			return (NULL);
-		list->content_size = content_size;
+		}
+		ft_memcpy(list->content, content, content_size);
 	}
+	list->content_size = content_size;
 	list->next = NULL;
 	return (list);
 }
