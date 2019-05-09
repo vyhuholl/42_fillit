@@ -44,23 +44,27 @@ int		ft_conn(char *input)
 ** marked with a given letter from input.
 */
 
-t_piece	*ft_construct_piece(char *input, char letter)
+t_piece	*ft_construct_piece(char *input, char letter, int cnt)
 {
 	t_piece	*piece;
-	int		x_start;
-	int		x_end;
-	int		y_start;
-	int		y_end;
+	char	**arr;
+	int		i;
 
-	x_start = ft_get_x_start(input);
-	x_end = ft_get_x_end(input);
-	y_start = ft_get_y_start(input);
-	y_end = ft_get_y_end(input);
-	piece = ft_memalloc(sizeof(t_piece));
+	if (!ft_is_ok(input, cnt))
+		return (NULL);
+	piece = (t_piece*)malloc(sizeof(t_piece) + 1);
+	piece->x_len = ft_get_x_len(input);
+	piece->y_len = ft_get_y_len(input);
 	piece->letter = letter;
-	piece->x_len = x_end - x_start + 1;
-	piece->y_len = y_end - y_start + 1;
-	piece->arr = ft_get_arr(input, piece->x_len, piece->y_len);
+	arr = (char**)malloc(sizeof(char*) * (piece->y_len + 1));
+	i = 0;
+	while (i < piece->y_len)
+	{
+		arr[i] = (char*)malloc(sizeof(char) * (piece->x_len + 1));
+		ft_strncpy(arr[i], input + ft_get_start(input, i), piece->x_len);
+		i++;
+	}
+	piece->arr = arr;
 	return (piece);
 }
 
@@ -69,7 +73,7 @@ t_piece	*ft_construct_piece(char *input, char letter)
 ** marked with a given letter from input.
 */
 
-t_piece	*ft_is_ok(char *input, char letter, int cnt)
+int		ft_is_ok(char *input, int cnt)
 {
 	int	i;
 	int	count;
@@ -81,19 +85,19 @@ t_piece	*ft_is_ok(char *input, char letter, int cnt)
 		if (i % 5 < 4)
 		{
 			if (input[i] != '#' && input[i] != '.')
-				return (NULL);
+				return (0);
 			if (input[i] == '#')
 				count++;
 		}
 		else if (input[i] != '\n')
-			return (NULL);
+			return (0);
 		i++;
 	}
 	if (cnt == 21 && input[20] != '\n')
-		return (NULL);
+		return (0);
 	if (count != 4 || ft_conn(input) == 0)
-		return (NULL);
-	return (ft_construct_piece(input, letter));
+		return (0);
+	return (1);
 }
 
 /*

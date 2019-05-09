@@ -29,7 +29,7 @@ t_list	*ft_read(int fd)
 	current = 'A';
 	while ((len = read(fd, buffer, 21)) >= 20)
 	{
-		if (!(piece = ft_is_ok(buffer, current++, len)))
+		if (!(piece = ft_construct_piece(buffer, current++, len)))
 		{
 			ft_memdel((void**)&buffer);
 			return (ft_free_list(list));

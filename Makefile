@@ -12,8 +12,8 @@
 
 NAME = fillit
 FLAG = -Wall -Wextra -Werror
-SRC = main.c input_output.c checker.c solver.c getters.c place_empty.c
-OBJ = main.o input_output.o checker.o solver.o getters.o place_empty.o
+SRC = main.c input_output.c checker.c solver.c getters.c place_empty.c test.c
+OBJ = main.o input_output.o checker.o solver.o getters.o place_empty.o test.o
 
 all: $(NAME)
 

@@ -23,6 +23,7 @@ int	main(int argc, char **argv)
 			ft_putstr("error\n");
 		else
 		{
+			ft_print_list(input);
 			solution = ft_solve(input);
 			ft_print(solution);
 			ft_free_map(solution);

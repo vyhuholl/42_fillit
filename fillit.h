@@ -42,14 +42,12 @@ typedef struct	s_piece
 }				t_piece;
 
 t_list			*ft_read(int fd);
-int				ft_get_x_start(char *input);
-int				ft_get_x_end(char *input);
-int				ft_get_y_start(char *input);
-int				ft_get_y_end(char *input);
-char			**ft_get_arr(char *input, int x_len, int y_len);
+int				ft_get_start(char *input, int n);
+int				ft_get_x_len(char *input);
+int				ft_get_y_len(char *input);
 int				ft_conn(char *input);
-t_piece			*ft_construct_piece(char *input, char letter);
-t_piece			*ft_is_ok(char *input, char letter, int cnt);
+t_piece			*ft_construct_piece(char *input, char letter, int cnt);
+int				ft_is_ok(char *input, int cnt);
 int				ft_is_map_ok(t_map *map, t_list *input);
 t_map			*ft_create_map(int size);
 int				ft_can_place(t_map *map, t_piece *piece, int i, int j);
@@ -61,5 +59,7 @@ t_list			*ft_free_list(t_list *list);
 void			ft_free_map(t_map *map);
 void			ft_print(t_map *map);
 void			ft_place_empty(t_map *map, t_piece *piece, int x, int y);
+void			ft_print_piece(t_piece *piece);
+void			ft_print_list(t_list *list);
 
 #endif
