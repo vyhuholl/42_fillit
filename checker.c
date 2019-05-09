@@ -12,50 +12,29 @@
 
 #include "fillit.h"
 
-/*
-** A function which checks whether a block of a tetrimino
-** at (x, y) position touches at least one other block.
-*/
-
-int		ft_touches(t_piece *piece, char letter, int x, int y)
+int		ft_conn(char *input)
 {
-	if (x > 0 && piece->arr[x - 1][y] == letter)
-		return (1);
-	if (y > 0 && piece->arr[x][y - 1] == letter)
-		return (1);
-	if (x < piece->x_len - 1 && piece->arr[x + 1][y] == letter)
-		return (1);
-	if (y < piece->y_len - 1 && piece->arr[x][y + 1] == letter)
-		return (1);
-	return (0);
-}
+	int	i;
+	int	n;
 
-/*
-** A function which checks whether a piece is connected.
-*/
-
-int		ft_is_connected(t_piece *piece, char letter)
-{
-	int i;
-	int	j;
-
-	j = 0;
-	while (j < piece->x_len)
+	i = 0;
+	n = 0;
+	while (i < 20)
 	{
-		i = 0;
-		while (i < piece->y_len)
+		if (input[i] == '#')
 		{
-			if (piece->arr[i][j] == letter)
-				if (!ft_touches(piece, letter, j, i))
-				{
-					ft_free_piece(piece);
-					return (0);
-				}
-			i++;
+			if (i + 1 < 20 && input[i + 1] == '#')
+				n++;
+			if (i - 1 >= 0 && input[i - 1] == '#')
+				n++;
+			if (i + 5 < 20 && input[i + 5] == '#')
+				n++;
+			if (i - 5 >= 0 && input[i - 5] == '#')
+				n++;
 		}
-		j++;
+		i++;
 	}
-	return (1);
+	return (n == 6 || n == 8);
 }
 
 /*
@@ -80,8 +59,6 @@ t_piece	*ft_construct_piece(char *input, char letter)
 	piece->x_len = x_end - x_start;
 	piece->y_len = y_end - y_start;
 	piece->arr = ft_get_arr(input, piece->x_len, piece->y_len, letter);
-	if (!ft_is_connected(piece, letter))
-		return (NULL);
 	return (piece);
 }
 
@@ -97,16 +74,16 @@ t_piece	*ft_is_ok(char *input, char letter)
 
 	i = 0;
 	count = 0;
-	while (i < 21)
+	while (i < 20)
 	{
 		if (input[i] != '#' && input[i] != '.')
-			if (!(input[i] == '\n' && (i % 4 == 0)))
+			if (!(input[i] == '\n' && (i % 5 == 4)))
 				return (NULL);
 		if (input[i] == '#')
 			count++;
 		i++;
 	}
-	if (count != 4)
+	if (count != 4 || ft_conn(input))
 		return (NULL);
 	return (ft_construct_piece(input, letter));
 }
