@@ -27,7 +27,7 @@ t_list	*ft_read(int fd)
 	buffer = ft_strnew(21);
 	list = NULL;
 	current = 'A';
-	while ((len = read(fd, buffer, 21)) < 21)
+	while ((len = read(fd, buffer, 21)) >= 20)
 	{
 		if (!(piece = ft_is_ok(buffer, current++)))
 		{

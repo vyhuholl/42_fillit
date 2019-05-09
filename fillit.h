@@ -52,7 +52,7 @@ char			**ft_get_arr(char *input, int x_len, int y_len, char letter);
 int				ft_touches(t_piece *piece, char letter, int x, int y);
 int				ft_is_connected(t_piece *piece, char letter);
 t_piece			*ft_construct_piece(char *input, char letter);
-t_piece 		*ft_is_ok(char *input, char letter);
+t_piece			*ft_is_ok(char *input, char letter);
 int				ft_is_map_ok(t_map *map, t_list *input);
 t_map			*ft_create_map(int size);
 int				ft_can_place(t_map *map, t_piece *piece, int i, int j);
