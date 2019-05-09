@@ -41,7 +41,7 @@ typedef struct	s_piece
 	int		y_len;
 }				t_piece;
 
-t_list			*ft_read(int fd);
+t_list			*ft_read(int fd, char current);
 int				ft_get_start(char *input, int n);
 int				ft_get_x_len(char *input);
 int				ft_get_y_len(char *input);
@@ -59,7 +59,5 @@ t_list			*ft_free_list(t_list *list);
 void			ft_free_map(t_map *map);
 void			ft_print(t_map *map);
 void			ft_place_empty(t_map *map, t_piece *piece, int x, int y);
-void			ft_print_piece(t_piece *piece);
-void			ft_print_list(t_list *list);
 
 #endif

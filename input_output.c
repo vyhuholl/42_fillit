@@ -16,19 +16,19 @@
 ** A function which reads a list of tetriminos from the file descriptor.
 */
 
-t_list	*ft_read(int fd)
+t_list	*ft_read(int fd, char current)
 {
 	t_list	*list;
 	t_piece	*piece;
 	char	*buffer;
-	char	current;
 	int		len;
+	int		last;
 
 	buffer = ft_strnew(21);
 	list = NULL;
-	current = 'A';
 	while ((len = read(fd, buffer, 21)) >= 20)
 	{
+		last = len;
 		if (!(piece = ft_construct_piece(buffer, current++, len)))
 		{
 			ft_memdel((void**)&buffer);
@@ -38,7 +38,7 @@ t_list	*ft_read(int fd)
 		ft_memdel((void**)&piece);
 	}
 	ft_memdel((void**)&buffer);
-	if (len != 0)
+	if (len != 0 || (len == 0 && last == 21))
 		return (ft_free_list(list));
 	ft_lstrev(&list);
 	return (list);

@@ -12,6 +12,10 @@
 
 #include "fillit.h"
 
+/*
+** A function which checks whether input is connected.
+*/
+
 int		ft_conn(char *input)
 {
 	int	i;
@@ -69,8 +73,7 @@ t_piece	*ft_construct_piece(char *input, char letter, int cnt)
 }
 
 /*
-** A function which constructs a tetrimino
-** marked with a given letter from input.
+** A function which checks whether input is correct.
 */
 
 int		ft_is_ok(char *input, int cnt)

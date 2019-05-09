@@ -16,14 +16,15 @@ int	main(int argc, char **argv)
 {
 	t_list	*input;
 	t_map	*solution;
+	char	current;
 
 	if (argc == 2)
 	{
-		if (!(input = ft_read(open(argv[1], O_RDONLY))))
+		current = 'A';
+		if (!(input = ft_read(open(argv[1], O_RDONLY), current)))
 			ft_putstr("error\n");
 		else
 		{
-			ft_print_list(input);
 			solution = ft_solve(input);
 			ft_print(solution);
 			ft_free_map(solution);
