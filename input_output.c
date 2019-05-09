@@ -99,7 +99,7 @@ void	ft_free_map(t_map *map)
 }
 
 /*
-** A function which prints a map, immediately freeing it after.
+** A function which prints a map.
 */
 
 void	ft_print(t_map *map)
@@ -111,9 +111,6 @@ void	ft_print(t_map *map)
 	{
 		ft_putstr(map->arr[i]);
 		ft_putchar('\n');
-		ft_memdel((void**)&map->arr[i]);
 		i++;
 	}
-	ft_memdel((void**)&map->arr);
-	ft_memdel((void**)&map);
 }

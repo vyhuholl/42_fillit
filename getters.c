@@ -80,7 +80,7 @@ int		ft_get_y_end(char *input)
 	return (end);
 }
 
-char	**ft_get_arr(char *input, int x_len, int y_len, char letter)
+char	**ft_get_arr(char *input, int x_len, int y_len)
 {
 	char	**arr;
 	int		i;
@@ -91,17 +91,17 @@ char	**ft_get_arr(char *input, int x_len, int y_len, char letter)
 	y_start = ft_get_y_start(input);
 	arr = ft_memalloc(sizeof(char*) * (y_len + 1));
 	i = 0;
-	while (i < y_len + 1)
+	while (i < y_len)
 	{
-		arr[i] = ft_strnew(x_len + 1);
+		arr[i] = ft_strnew(x_len);
 		i++;
 	}
 	i = 0;
 	while (i < 20)
 	{
-		if (i % 5 >= x_start && i % 5 <= x_start + x_len &&
-			i / 5 >= y_start && i / 5 <= y_start + y_len)
-			arr[i / 5 - y_start][i % 5 - x_start] = CHECK(input, i, letter);
+		if (i % 5 >= x_start && i % 5 < x_start + x_len &&
+			i / 5 >= y_start && i / 5 < y_start + y_len)
+			arr[i / 5 - y_start][i % 5 - x_start] = input[i];
 		i++;
 	}
 	return (arr);

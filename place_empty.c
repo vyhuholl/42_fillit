@@ -27,7 +27,7 @@ void	ft_place_empty(t_map *map, t_piece *piece, int x, int y)
 		i = 0;
 		while (i < piece->y_len)
 		{
-			if (piece->arr[i][j] == piece->letter)
+			if (piece->arr[i][j] == '#')
 				map->arr[y + i][x + j] = '.';
 			i++;
 		}

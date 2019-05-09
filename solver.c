@@ -83,7 +83,7 @@ void	ft_place(t_map *map, t_piece *piece, int x, int y)
 		i = 0;
 		while (i < piece->y_len)
 		{
-			if (piece->arr[i][j] == piece->letter)
+			if (piece->arr[i][j] == '#')
 				map->arr[y + i][x + j] = piece->letter;
 			i++;
 		}
@@ -93,13 +93,13 @@ void	ft_place(t_map *map, t_piece *piece, int x, int y)
 
 /*
 ** Auxillary function which returns a minimum possible size for the new map
-** -- minimum n such as n >= len^2, where n is a number of tetriminos.
+** -- minimum n such as n >= (len * 4)^2, where len is the number of tetriminos.
 */
 
-size_t	ft_min_size(t_list *list)
+int		ft_min_size(t_list *list)
 {
-	size_t	len;
-	size_t	res;
+	int		len;
+	int		res;
 	t_list	*ptr;
 
 	len = 0;
@@ -109,6 +109,7 @@ size_t	ft_min_size(t_list *list)
 		ptr = ptr->next;
 		len++;
 	}
+	len *= 4;
 	res = 2;
 	while (res * res < len)
 		res++;
@@ -122,7 +123,7 @@ size_t	ft_min_size(t_list *list)
 t_map	*ft_solve(t_list *input)
 {
 	t_map	*map;
-	size_t	size;
+	int		size;
 
 	size = ft_min_size(input);
 	map = ft_create_map(size);

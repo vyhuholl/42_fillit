@@ -58,9 +58,9 @@ t_piece	*ft_construct_piece(char *input, char letter)
 	y_end = ft_get_y_end(input);
 	piece = ft_memalloc(sizeof(t_piece));
 	piece->letter = letter;
-	piece->x_len = x_end - x_start;
-	piece->y_len = y_end - y_start;
-	piece->arr = ft_get_arr(input, piece->x_len, piece->y_len, letter);
+	piece->x_len = x_end - x_start + 1;
+	piece->y_len = y_end - y_start + 1;
+	piece->arr = ft_get_arr(input, piece->x_len, piece->y_len);
 	return (piece);
 }
 
