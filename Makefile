@@ -11,23 +11,27 @@
 #******************************************************************************#
 
 NAME = fillit
-HEADER = ./fillit/fillit.h
 FLAG = -Wall -Wextra -Werror
-SRC = ./fillit/main.c ./fillit/input_output.c ./fillit/checker.c ./fillit/solver.c ./fillit/getters.c ./fillit/place_empty.c
-OBJ = ./fillit/main.o ./fillit/input_output.c ./fillit/checker.o ./fillit/solver.o ./fillit/getters.o ./fillit/place_empty.o
-
-OPTION = -c -I $(HEADER)
+SRC = main.c input_output.c checker.c solver.c getters.c place_empty.c
+OBJ = main.o input_output.o checker.o solver.o getters.o place_empty.o
 
 all: $(NAME)
 
-$(NAME):
-	gcc $(FLAG) $(OPTION) $(SRC)
-	ar rc $(NAME) $(OBJ)
+$(NAME): lib $(OBJ)
+	gcc $(FLAG) -o $(NAME) $(OBJ) -L libft -lft
+
+$(OBJ):
+	gcc $(FLAG) -c $(SRC) -I fillit.h -I libft/libft.h
+
+lib:
+	make -C libft
 
 clean:
-	/bin/rm -f $(OBJ)
+	/bin/rm -rf $(OBJ)
+	make -C libft clean
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	/bin/rm -rf $(NAME)
+	make -C libft fclean
 
 re: fclean all
